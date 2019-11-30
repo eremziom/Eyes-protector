@@ -42,19 +42,29 @@ class App extends React.Component {
         {(status === 'rest') ? <img src="./images/rest.png" /> : ''}
         {(status !== 'off') ? <div className="timer">{formatTime(time)}</div> : ''}
         {(status === 'off') ? <button className="btn" onClick={this.startTimer.bind(this)}>Start</button> : ''}
-        {(status !== 'off') ? <button className="btn">Stop</button> : ''}
-        <button className="btn btn-close">X</button>
+        {(status !== 'off') ? <button className="btn" onClick={this.stopTimer.bind(this)}>Stop</button> : ''}
+        <button className="btn btn-close"  onClick={this.closer}>X</button>
       </div>
     )
   }
+
   startTimer() {
     this.setState({
       timer: setInterval(this.step.bind(this), 1000),
       status: 'work',
     });
   };
+
+  stopTimer() {
+    clearInterval(this.state.timer);
+    this.setState({
+      time: 5,
+      status: 'off'
+    });
+  };
   
   step() {
+    let audioElement = new Audio('sounds/bell.wav');
     this.setState({
       time: this.state.time - 1,
     })
@@ -64,6 +74,7 @@ class App extends React.Component {
       switch (this.state.status) {
 
         case 'work':
+        audioElement.play();
         this.setState({
           status: 'rest',
           time: 7,
@@ -71,6 +82,7 @@ class App extends React.Component {
         break
 
         case 'rest':
+        audioElement.play();
         this.setState({
           status: 'work',
           time: 5,
@@ -78,6 +90,10 @@ class App extends React.Component {
         break
       }
     }
+  };
+
+  closer() {
+    window.close();
   };
 };
 
