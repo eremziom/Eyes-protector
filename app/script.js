@@ -7,13 +7,13 @@ const formatTime = (time) => {
   let seconds = time%60;
   if(minutes < 10){
     minutes = '0' + minutes;
-  }
+  };
   if(seconds < 10){
     seconds = '0' + seconds;
-  }
+  };
   const parsedTime = minutes + ':' + seconds;
   return parsedTime
-}
+};
 
 
 
@@ -25,11 +25,12 @@ class App extends React.Component {
       time: 5,
       timer: null,
     };
-  }
+  };
 
   render() {
 
-    const {status, time, timer} = this.state;
+    const {status, time} = this.state;
+    
     return (
       <div>
         <h1>Protect your eyes</h1>
@@ -46,7 +47,7 @@ class App extends React.Component {
         <button className="btn btn-close"  onClick={this.closer}>X</button>
       </div>
     )
-  }
+  };
 
   startTimer() {
     this.setState({
@@ -64,10 +65,11 @@ class App extends React.Component {
   };
   
   step() {
-    let audioElement = new Audio('sounds/bell.wav');
+    const audioElement = new Audio('sounds/bell.wav');
+
     this.setState({
       time: this.state.time - 1,
-    })
+    });
     let currentTime = this.state.time;
 
     if(currentTime < 0){
